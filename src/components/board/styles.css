@@ -1,0 +1,16 @@
+body {
+  width: 100%;
+  text-align: center;
+}
+
+.board {
+  width: 730px;
+  display: flex;
+  flex-wrap: wrap;
+  margin-left: auto;
+  margin-right: auto;
+}
+/*Card{
+  box-sizing: border-box;
+  flex-basis: 20%;
+}*/
