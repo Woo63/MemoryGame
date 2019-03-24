@@ -1,25 +1,19 @@
 import React, {useState} from 'react'
 import Board from './components/board'
 import './App.css'
-
 import initializeDeck from './deck'
 
-export default function App() {
+export default function App(){
 
-    const [output, setOutput] = useState(false)
+    const [show, setShow] = useState(false)
     const [cards, setCards] = useState([])
     const [flipped, setFlipped] = useState([])
     const [solved, setSolved] = useState([])
     const [size_card, setSize] = useState(150)
     const [disabled, setDisabled] = useState(false)
     const [score, setScore] = useState(0)
-
-
-    const preloadImages = () =>
-        cards.map((card) => {
-            const src = `/img/${card.type}.png`
-            new Image().src = src
-        })
+    const [numberCards, setNumberCards] = useState(0)
+    const [value, setValue] = useState(1)
 
     const sameCardClickedTwice = (id) => flipped.includes(id)
 
@@ -34,6 +28,10 @@ export default function App() {
         setDisabled(false)
     }
 
+    const win = () => {
+        alert('You win!')
+    }
+
     const handleClick = (id) => {
         setDisabled(true)
         if (flipped.length === 0) {
@@ -45,6 +43,11 @@ export default function App() {
             if (isAMatch(id)) {
                 setSolved([...solved, ...flipped, id])
                 resetCards()
+                const temp = score+1
+                setScore(temp)
+                if (temp == numberCards){
+                    setTimeout(win, 1000)
+                }
             } else {
                 setTimeout(resetCards, 1000)
             }
@@ -53,29 +56,50 @@ export default function App() {
 
     const handleInput = (event) => {
       if ((event.target.value<7) && (event.target.value>1)) {
-          setCards(initializeDeck(event.target.value))
-          setOutput(true)
-          if (event.target.value<5){
-          setSize(600/event.target.value)}
-          else {
-              setSize(150)
-          }
+          setNumberCards(event.target.value)
       }
+    }
+
+    const handleValue = (event) => {
+        setValue(event.target.value)
+    }
+
+    const handleButton = () => {
+        setCards(initializeDeck(numberCards, value))
+        setSolved([])
+        setFlipped([])
+        setScore(0)
+        switch (numberCards) {
+            case '2':
+                setSize(250)
+                break;
+            case '3':
+                setSize(630/numberCards);
+                break;
+            default:
+                setSize(150)
+        }
+        if ((numberCards>1)&&(numberCards<7)){
+            setShow(true)
+        }
     }
 
     return (
         <div>
             <h1>Memory game</h1>
-          <div className={'choice'}>
-            <p> Выберите количество карт для игры: </p>
+              <label className={'choice'}> Выберите количество карт для игры:
             <input
                 type="number"
                 max={6}
                 min={2}
                 onChange={handleInput}
             />
-          </div>
-            if (output){
+              </label>
+            <div className={'radio'}>
+                <label><input type={'radio'} name={'check'} defaultChecked={true} value={'1'} onClick={handleValue} />Cake</label>
+                <label><input type={'radio'} name={'check'} value={'2'} onClick={handleValue}/>Cat</label>
+            </div>
+            <button onClick={handleButton}> Начать игру</button>
             <Board
                 cards={cards}
                 flipped={flipped}
@@ -83,8 +107,8 @@ export default function App() {
                 size_card={size_card}
                 handleClick={handleClick}
                 disabled={disabled}
-            />
-        }
+            />}
+            <p className={show ? 'score' : 'hidden'}>Ваш счет: {score}</p>
         </div>
     )
 }

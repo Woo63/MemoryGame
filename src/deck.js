@@ -8,18 +8,27 @@ function shuffle(array) {
   }
   return new_array
 }
-function choiceSet(number){
+function choiceFace(value){
     const set1 = ['cake1', 'cake2', 'cake3', 'cake4',
         'cake5', 'cake6']
+    const set2 = ['cat1', 'cat2', 'cat3', 'cat4',
+        'cat5', 'cat6']
+    if (value == 1){
+        return set1
+    } else
+        return set2
+}
+function choiceSet(number, value){
+    const set = choiceFace(value)
     const cards = []
     for (let i = 0; i<number; i++){
-      cards.push(set1[i])
+      cards.push(set[i])
     }
     return cards
 }
-export default function initializeDeck(number) {
+export default function initializeDeck(number, value) {
     let id = 0
-    const cards = choiceSet(number).reduce((acc, type) => {
+    const cards = choiceSet(number, value).reduce((acc, type) => {
         acc.push(...[{
             id: id++,
             type
