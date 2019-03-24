@@ -2,16 +2,22 @@
   "name": "memory_game",
   "version": "0.1.0",
   "private": true,
+  "homepage": "http://Woo63.github.io/MemoryGame",
+  "devDependencies": {
+    "gh-pages": "^2.0.1",
+    "react-scripts": "2.1.8"
+  },
   "dependencies": {
     "react": "^16.8.4",
     "react-alert": "^5.4.0",
     "react-alert-template-basic": "^1.0.0",
     "react-dom": "^16.8.4",
-    "react-scripts": "2.1.8",
     "react-transition-group": "^1.2.1",
     "semantic-ui-react": "^0.86.0"
   },
   "scripts": {
+    "predeploy": "npm run build",
+    "deploy": "gh-pages -d build",
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
