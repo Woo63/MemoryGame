@@ -5,7 +5,7 @@
   "homepage": "http://Woo63.github.io/MemoryGame",
   "devDependencies": {
     "gh-pages": "^2.0.1",
-    "react-scripts": "2.1.8"
+    "react-scripts": "5.0.1"
   },
   "dependencies": {
     "react": "^16.8.4",
